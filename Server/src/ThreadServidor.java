@@ -30,20 +30,31 @@ public class ThreadServidor extends Thread {
     }
   }
 
-  public static void enviarMensagem(String mensagem, int id, String nome) throws IOException {
+  public static void enviarMensagem(String mensagem, int id, String nome) {
+    DataOutputStream paraUsuario;
     for (int i = 0; i < listaUsuarios.size(); i++) {
-      DataOutputStream paraUsuario =
-          new DataOutputStream(listaUsuarios.get(i).getSocket().getOutputStream());
-      paraUsuario.writeBytes(nome + ": " + mensagem + "\n");
+      try {
+        System.out.println(
+            "Tentando enviar mensagem " + mensagem + " para user " + listaUsuarios.get(i));
+        paraUsuario = new DataOutputStream(listaUsuarios.get(i).getSocket().getOutputStream());
+        paraUsuario.writeBytes(nome + ": " + mensagem + "\n");
+      } catch (Exception e) {
+        System.out.println("Problema na conexão com " + listaUsuarios.get(i) + ".");
+        listaUsuarios.remove(i);
+        i--;
+      }
     }
   }
 
   public static void removerUsuario(int id) {
-    for (int i = 0; i < listaUsuarios.size(); i++) {
-      if (listaUsuarios.get(i).getIdUsuario() == id) {
-        listaUsuarios.remove(i);
-        break;
+    try {
+      for (int i = 0; i < listaUsuarios.size(); i++) {
+        if (listaUsuarios.get(i).getIdUsuario() == id) {
+          listaUsuarios.remove(i);
+          break;
+        }
       }
+    } catch (Exception e) {
     }
   }
 }

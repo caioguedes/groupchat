@@ -18,7 +18,7 @@ public class Cliente {
         socketCliente = new Socket(HOST, PORT);
         break;
       } catch (ConnectException connection) {
-        System.out.println("Tentando conex„o...");
+        System.out.println("Tentando conex√£o...");
         Thread.sleep(5000);
       }
     }

@@ -2,36 +2,34 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import java.net.SocketException;
 
 public class Usuario extends Thread {
 
   private int id;
   private String nome;
   private Socket socketCliente;
+  private BufferedReader doUsuario;
 
-  public Usuario(Socket socketCliente, int id) {
+  public Usuario(Socket socketCliente, int id) throws IOException {
     this.socketCliente = socketCliente;
     this.id = id;
+    this.doUsuario = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
   }
 
   public void run() {
     try {
-      BufferedReader doUsuario =
-          new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
       this.nome = doUsuario.readLine();
       while (true) {
-        doUsuario = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
-        if (doUsuario != null) {
-          ThreadServidor.enviarMensagem(doUsuario.readLine(), id, nome);
+        String mensagem = doUsuario.readLine();
+        if (mensagem == null) {
+          break;
         }
+        ThreadServidor.enviarMensagem(mensagem, id, nome);
       }
-    } catch (SocketException socket) {
-      System.out.println("Conex„o perdida com usu·rio " + id + ".");
+    } catch (Exception e) {
       ThreadServidor.removerUsuario(id);
-    } catch (IOException e) {
-      e.printStackTrace();
     }
+    System.out.println("Conex√£o perdida com usu√°rio " + id + ".");
   }
 
   public int getIdUsuario() {
@@ -40,5 +38,9 @@ public class Usuario extends Thread {
 
   public Socket getSocket() {
     return socketCliente;
+  }
+
+  public String toString() {
+    return id + ", " + nome;
   }
 }

@@ -21,12 +21,12 @@ public class ThreadUserEscrita extends Thread {
       lerInput();
       System.out.println("Bem-vindo ao chat! :)");
       while (true) {
-        if (socketCliente.isClosed()) break;
         lerInput();
+        if (socketCliente.isClosed()) break;
       }
     } catch (IOException ioe) {
-      ioe.printStackTrace();
     }
+    System.out.println("Conexão com o servidor encerrada.");
   }
 
   private void lerInput() throws IOException {

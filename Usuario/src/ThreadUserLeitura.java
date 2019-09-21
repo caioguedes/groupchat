@@ -17,14 +17,13 @@ public class ThreadUserLeitura extends Thread {
       try {
         String mensagem = doServidor.readLine();
         if (mensagem == null) {
-        	socketCliente.close();
-        	break;
+          socketCliente.close();
+          break;
         }
         System.out.println(mensagem);
       } catch (Exception e) {
         break;
       }
     }
-    System.out.println("A conexão com o servidor foi encerrada.");
   }
 }
