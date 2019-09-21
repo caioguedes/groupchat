@@ -19,6 +19,6 @@ public class ThreadUserLeitura extends Thread {
         break;
       }
     }
-    System.out.println("A conex„o com o servidor foi encerrada.");
+    System.out.println("A conex√£o com o servidor foi encerrada.");
   }
 }
