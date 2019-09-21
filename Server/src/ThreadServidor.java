@@ -22,7 +22,6 @@ public class ThreadServidor extends Thread {
 
         listaUsuarios.add(new Usuario(socketConexao, id++));
         new Thread(listaUsuarios.get(listaUsuarios.size() - 1)).start();
-        System.out.println("Uma nova pessoa entrou.");
       }
 
     } catch (IOException e) {
@@ -35,11 +34,25 @@ public class ThreadServidor extends Thread {
     for (int i = 0; i < listaUsuarios.size(); i++) {
       try {
         System.out.println(
-            "Tentando enviar mensagem " + mensagem + " para user " + listaUsuarios.get(i));
+            "Tentando enviar mensagem " + mensagem + " para " + listaUsuarios.get(i));
         paraUsuario = new DataOutputStream(listaUsuarios.get(i).getSocket().getOutputStream());
         paraUsuario.writeBytes(nome + ": " + mensagem + "\n");
       } catch (Exception e) {
-        System.out.println("Problema na conexão com " + listaUsuarios.get(i) + ".");
+        System.out.println(listaUsuarios.get(i) + " - Problema na conexão.");
+        listaUsuarios.remove(i);
+        i--;
+      }
+    }
+  }
+
+  public static void enviarMensagem(String mensagem, int id) {
+    DataOutputStream paraUsuario;
+    for (int i = 0; i < listaUsuarios.size(); i++) {
+      try {
+        paraUsuario = new DataOutputStream(listaUsuarios.get(i).getSocket().getOutputStream());
+        paraUsuario.writeBytes(mensagem + "\n");
+      } catch (Exception e) {
+        System.out.println(listaUsuarios.get(i) + " - Problema na conexão.");
         listaUsuarios.remove(i);
         i--;
       }
@@ -47,14 +60,11 @@ public class ThreadServidor extends Thread {
   }
 
   public static void removerUsuario(int id) {
-    try {
-      for (int i = 0; i < listaUsuarios.size(); i++) {
-        if (listaUsuarios.get(i).getIdUsuario() == id) {
-          listaUsuarios.remove(i);
-          break;
-        }
+    for (int i = 0; i < listaUsuarios.size(); i++) {
+      if (listaUsuarios.get(i).getIdUsuario() == id) {
+        listaUsuarios.remove(i);
+        break;
       }
-    } catch (Exception e) {
     }
   }
 }

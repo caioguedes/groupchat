@@ -19,17 +19,21 @@ public class Usuario extends Thread {
   public void run() {
     try {
       this.nome = doUsuario.readLine();
+      System.out.println(this + " - Conexão estabelecida.");
+      ThreadServidor.enviarMensagem(nome + " entrou.", id);
       while (true) {
         String mensagem = doUsuario.readLine();
         if (mensagem == null) {
+          System.out.println(this + " - O usuário não foi encontrado.");
           break;
         }
         ThreadServidor.enviarMensagem(mensagem, id, nome);
       }
     } catch (Exception e) {
+      System.out.println("Conexão perdida com usuário " + id + ".");
       ThreadServidor.removerUsuario(id);
     }
-    System.out.println("Conexão perdida com usuário " + id + ".");
+    ThreadServidor.enviarMensagem(nome + " saiu.", id);
   }
 
   public int getIdUsuario() {
@@ -41,6 +45,6 @@ public class Usuario extends Thread {
   }
 
   public String toString() {
-    return id + ", " + nome;
+    return "[User " + id + ", " + nome + "]";
   }
 }
