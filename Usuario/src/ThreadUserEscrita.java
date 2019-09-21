@@ -33,7 +33,7 @@ public class ThreadUserEscrita extends Thread {
     if (mensagem.equalsIgnoreCase("FIM")) {
       socketCliente.close();
     } else {
-      paraServidor.writeBytes(fraseUsuario.readLine() + '\n');
+      paraServidor.writeBytes(mensagem + '\n');
     }
   }
 }
