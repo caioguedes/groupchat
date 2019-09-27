@@ -1,17 +1,24 @@
 
 
 plugins {
-    id 'java-library'
+    id 'java'
     id 'application'
 }
 
-application {
-	mainClassName = 'com.lschaan.redes.Cliente'
+run {
+ mainClassName = "usuario.Cliente"
 }
 
 repositories {
     jcenter()
 }
 
+
 dependencies {
+}
+
+jar {
+	manifest {
+		attributes 'Main-Class': 'usuario.Cliente'
+	}	
 }

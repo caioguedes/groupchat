@@ -6,7 +6,7 @@ import java.net.Socket;
 import front.Front;
 
 public class Cliente {
-  private static final String HOST = "127.0.0.1";
+  private static final String HOST = "172.19.34.44";
   private static final int PORT = 6789;
   private static Socket socketCliente;
 
@@ -22,7 +22,7 @@ public class Cliente {
       try {
         socketCliente = new Socket(HOST, PORT);
         break;
-      } catch (ConnectException connection) {
+      } catch (ConnectException conexao) {
         System.out.println("Tentando conexão...");
         Thread.sleep(5000);
       }

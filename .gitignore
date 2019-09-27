@@ -9,4 +9,7 @@ usuario/.gitignore
 usuario/.project
 usuario/.settings/
 usuario/bin/
+usuario/build
+usuario/gradle/
+usuario/gradlew.bat
 

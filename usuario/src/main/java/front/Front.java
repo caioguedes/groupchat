@@ -6,8 +6,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,11 +20,9 @@ import javax.swing.UIManager;
 public class Front {
 
   private static String appName = "Chat";
-  Front mainGUI;
-  JButton sendMessage;
-  JTextField usernameChooser;
-  JFrame preFrame;
-
+  public static JButton sendMessage;
+  public static JTextField usernameChooser;
+  public static JFrame preFrame;
   public static JFrame newFrame = new JFrame(appName);
   public static JTextField messageBox;
   public static JTextArea chatBox;
@@ -41,8 +37,8 @@ public class Front {
             } catch (Exception e) {
               e.printStackTrace();
             }
-            Front mainGUI = new Front();
-            mainGUI.preDisplay();
+            Front front = new Front();
+            front.preDisplay();
           }
         });
   }
@@ -54,7 +50,7 @@ public class Front {
     JLabel chooseUsernameLabel = new JLabel("Digite seu nome:");
 
     JButton enterServer = new JButton("Entrar");
-    enterServer.addActionListener(new enterServerButtonListener());
+    enterServer.addActionListener(new ServerButtonListener());
     JPanel prePanel = new JPanel(new GridBagLayout());
 
     GridBagConstraints preRight = new GridBagConstraints();
@@ -74,7 +70,7 @@ public class Front {
     preFrame.setVisible(true);
   }
 
-  public void display() {
+  public static void display() {
     JPanel mainPanel = new JPanel();
     mainPanel.setLayout(new BorderLayout());
 
@@ -85,7 +81,7 @@ public class Front {
     messageBox = new JTextField(30);
     messageBox.requestFocusInWindow();
 
-    sendMessage = new JButton("Send Message");
+    sendMessage = new JButton("Enviar Mensagem");
     sendMessage.addActionListener(new SendMessageListener());
 
     chatBox = new JTextArea();
@@ -117,19 +113,5 @@ public class Front {
     newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     newFrame.setSize(470, 300);
     newFrame.setVisible(true);
-  }
-
-  String username;
-
-  class enterServerButtonListener implements ActionListener {
-    public void actionPerformed(ActionEvent event) {
-      username = usernameChooser.getText();
-      if (username.length() < 1) {
-        System.out.println("No!");
-      } else {
-        preFrame.setVisible(false);
-        display();
-      }
-    }
   }
 }
