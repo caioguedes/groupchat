@@ -5,8 +5,8 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 public class ThreadUserEscrita extends Thread {
-  private Socket socketCliente;
-  private DataOutputStream paraServidor;
+  private static Socket socketCliente;
+  private static DataOutputStream paraServidor;
   private BufferedReader fraseUsuario;
 
   public ThreadUserEscrita(Socket socketCliente) throws IOException {
@@ -16,26 +16,33 @@ public class ThreadUserEscrita extends Thread {
   }
 
   public void run() {
-    try {
-      System.out.println("Digite seu nome: ");
-      lerInput();
-      System.out.println("Bem-vindo ao chat! :)");
-      while (true) {
-        lerInput();
-        if (socketCliente.isClosed()) break;
-      }
-    } catch (IOException ioe) {
+    // System.out.println("Digite seu nome: ");
+    // System.out.println("Bem-vindo ao chat! :)");
+    while (true) {
+      // lerInput();
+      if (socketCliente.isClosed()) break;
     }
-    System.out.println("Conexão com o servidor encerrada.");
   }
 
-  private void lerInput() throws IOException {
-    String mensagem = fraseUsuario.readLine();
-
-    if (mensagem.equalsIgnoreCase("FIM")) {
-      socketCliente.close();
-    } else {
-      paraServidor.writeBytes(mensagem + '\n');
+  public static void lerInput(String mensagem) {
+    try {
+      if (mensagem.equalsIgnoreCase("FIM")) {
+        socketCliente.close();
+      } else {
+        paraServidor.writeBytes(mensagem + '\n');
+      }
+    } catch (IOException ioe) {
+      // socketCliente.close();
     }
   }
 }
+
+  //  private void lerInput() throws IOException {
+  //    String mensagem = fraseUsuario.readLine();
+  //
+  //    if (mensagem.equalsIgnoreCase("FIM")) {
+  //      socketCliente.close();
+  //    } else {
+  //      paraServidor.writeBytes(mensagem + '\n');
+  //    }
+  //  }

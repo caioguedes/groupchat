@@ -13,6 +13,7 @@ public class ThreadUserLeitura extends Thread {
   }
 
   public void run() {
+    Front.newFrame.isShowing();
     while (true) {
       try {
         String mensagem = doServidor.readLine();
@@ -20,7 +21,7 @@ public class ThreadUserLeitura extends Thread {
           socketCliente.close();
           break;
         }
-        System.out.println(mensagem);
+        Front.chatBox.append(mensagem + "\n");
       } catch (Exception e) {
         break;
       }
