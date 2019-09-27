@@ -11,8 +11,8 @@ public class Cliente {
   private static Socket socketCliente;
 
   public static void main(String argv[]) throws Exception {
-    HOST = argv[0];
-    PORT = Integer.parseInt(argv[1]);
+    if (argv.length > 0) HOST = argv[0];
+    if (argv.length > 1) PORT = Integer.parseInt(argv[1]);
 
     Socket socketCliente = realizarConexao();
     Front.start();
