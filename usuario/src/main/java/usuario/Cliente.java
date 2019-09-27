@@ -6,11 +6,14 @@ import java.net.Socket;
 import front.Front;
 
 public class Cliente {
-  private static final String HOST = "172.19.34.44";
-  private static final int PORT = 6789;
+  private static String HOST = "127.0.0.1";
+  private static int PORT = 6789;
   private static Socket socketCliente;
 
   public static void main(String argv[]) throws Exception {
+    HOST = argv[0];
+    PORT = Integer.parseInt(argv[1]);
+
     Socket socketCliente = realizarConexao();
     Front.start();
     new Thread(new ThreadUserLeitura(socketCliente)).start();
