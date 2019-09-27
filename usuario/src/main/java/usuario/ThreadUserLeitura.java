@@ -1,7 +1,11 @@
+package usuario;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+
+import front.Front;
 
 public class ThreadUserLeitura extends Thread {
   private Socket socketCliente;
@@ -13,7 +17,6 @@ public class ThreadUserLeitura extends Thread {
   }
 
   public void run() {
-    Front.newFrame.isShowing();
     while (true) {
       try {
         String mensagem = doServidor.readLine();

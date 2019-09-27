@@ -1,5 +1,9 @@
+package usuario;
+
 import java.net.ConnectException;
 import java.net.Socket;
+
+import front.Front;
 
 public class Cliente {
   private static final String HOST = "127.0.0.1";
@@ -8,6 +12,7 @@ public class Cliente {
 
   public static void main(String argv[]) throws Exception {
     Socket socketCliente = realizarConexao();
+    Front.start();
     new Thread(new ThreadUserLeitura(socketCliente)).start();
     new Thread(new ThreadUserEscrita(socketCliente)).start();
   }

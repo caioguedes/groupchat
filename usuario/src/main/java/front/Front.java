@@ -1,3 +1,5 @@
+package front;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -6,8 +8,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.ConnectException;
-import java.net.Socket;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,22 +23,15 @@ public class Front {
 
   private static String appName = "Chat";
   Front mainGUI;
-  public static JFrame newFrame = new JFrame(appName);
   JButton sendMessage;
-  public static JTextField messageBox;
-  public static JTextArea chatBox;
   JTextField usernameChooser;
   JFrame preFrame;
 
-  private static final String HOST = "191.4.197.154";
-  private static final int PORT = 6789;
-  private static Socket socketCliente;
+  public static JFrame newFrame = new JFrame(appName);
+  public static JTextField messageBox;
+  public static JTextArea chatBox;
 
-  public static void main(String[] args) throws Exception {
-    Socket socketCliente = realizarConexao();
-    new Thread(new ThreadUserLeitura(socketCliente)).start();
-    new Thread(new ThreadUserEscrita(socketCliente)).start();
-
+  public static void start() {
     SwingUtilities.invokeLater(
         new Runnable() {
           @Override
@@ -52,19 +45,6 @@ public class Front {
             mainGUI.preDisplay();
           }
         });
-  }
-
-  private static Socket realizarConexao() throws Exception {
-    while (true) {
-      try {
-        socketCliente = new Socket(HOST, PORT);
-        break;
-      } catch (ConnectException connection) {
-        System.out.println("Tentando conexão...");
-        Thread.sleep(5000);
-      }
-    }
-    return socketCliente;
   }
 
   public void preDisplay() {
@@ -83,7 +63,6 @@ public class Front {
     GridBagConstraints preLeft = new GridBagConstraints();
     preLeft.anchor = GridBagConstraints.WEST;
     preLeft.insets = new Insets(0, 10, 0, 10);
-    // preRight.weightx = 2.0;
     preRight.fill = GridBagConstraints.HORIZONTAL;
     preRight.gridwidth = GridBagConstraints.REMAINDER;
 

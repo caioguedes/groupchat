@@ -1,0 +1,12 @@
+server/.classpath
+server/.gitignore
+server/.project
+server/.settings/
+server/bin/
+server/src/main/java/server/
+usuario/.classpath
+usuario/.gitignore
+usuario/.project
+usuario/.settings/
+usuario/bin/
+
