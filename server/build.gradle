@@ -1,12 +1,24 @@
 
 
 plugins {
-    id 'java-library'
+    id 'java'
+    id 'application'
+}
+
+run {
+ mainClassName = "server.Servidor"
 }
 
 repositories {
     jcenter()
 }
 
+
 dependencies {
+}
+
+jar {
+	manifest {
+		attributes 'Main-Class': 'server.Servidor'
+	}	
 }
